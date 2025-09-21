@@ -1,0 +1,332 @@
+@import '../styles/variables.scss';
+@import '../styles/mixins.scss';
+
+.dashboard {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  @include fade-in;
+}
+
+// Dashboard Header
+.dashboardHeader {
+  margin-bottom: var(--space-8);
+  
+  @include mobile-only {
+    margin-bottom: var(--space-6);
+  }
+}
+
+.headerContent {
+  @include flex-between;
+  align-items: flex-start;
+  gap: var(--space-6);
+  
+  @include mobile-only {
+    @include flex-column;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+}
+
+.headerText {
+  flex: 1;
+  
+  h1 {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-bold);
+    @include gradient-text;
+    margin-bottom: var(--space-2);
+    
+    @include mobile-only {
+      font-size: var(--text-3xl);
+    }
+  }
+  
+  p {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin: 0;
+    
+    @include mobile-only {
+      font-size: var(--text-base);
+    }
+  }
+}
+
+.headerActions {
+  @include flex-end;
+  gap: var(--space-3);
+  
+  @include mobile-only {
+    @include flex-start;
+  }
+}
+
+.refreshButton {
+  @include button-secondary;
+  @include flex-center;
+  gap: var(--space-2);
+  
+  &.refreshing {
+    pointer-events: none;
+    opacity: 0.7;
+    
+    svg {
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+// Stats Grid
+.statsGrid {
+  @include grid-auto-fit(280px, var(--space-6));
+  margin-bottom: var(--space-8);
+  
+  @include mobile-only {
+    @include grid-auto-fit(100%, var(--space-4));
+    margin-bottom: var(--space-6);
+  }
+}
+
+// Charts Grid
+.chartsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+  
+  @include tablet-up {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  @include mobile-only {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+}
+
+.chartCard {
+  // Individual chart cards inherit styles from the Chart component
+}
+
+// Bottom Section
+.bottomSection {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-6);
+  
+  @include tablet-up {
+    grid-template-columns: 2fr 1fr;
+  }
+  
+  @include mobile-only {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+}
+
+.fullWidthChart {
+  // Full width chart inherits styles from Chart component
+}
+
+.sideContent {
+  @include flex-column;
+  gap: var(--space-6);
+  
+  @include mobile-only {
+    gap: var(--space-4);
+  }
+}
+
+// Quick Actions
+.quickActions {
+  .actionsList {
+    @include flex-column;
+    gap: var(--space-4);
+  }
+}
+
+// Recent Activity
+.recentActivity {
+  .activityList {
+    @include flex-column;
+    gap: var(--space-4);
+  }
+  
+  .activityItem {
+    @include flex-start;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    border-radius: var(--radius-lg);
+    transition: background-color var(--timing-fast) var(--ease-out);
+    
+    &:hover {
+      background: var(--bg-secondary);
+    }
+  }
+  
+  .activityIcon {
+    @include flex-center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-lg);
+    background: var(--primary-100);
+    color: var(--primary-600);
+    font-size: var(--text-lg);
+    flex-shrink: 0;
+  }
+  
+  .activityContent {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .activityMessage {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    margin-bottom: var(--space-1);
+    @include text-truncate-lines(2);
+  }
+  
+  .activityTime {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+  
+  .emptyActivity {
+    @include flex-center-column;
+    padding: var(--space-8);
+    color: var(--text-muted);
+    gap: var(--space-3);
+    
+    svg {
+      font-size: var(--text-3xl);
+      opacity: 0.5;
+    }
+    
+    span {
+      font-size: var(--text-sm);
+    }
+  }
+}
+
+// Loading State
+.loadingState {
+  @include flex-center-column;
+  padding: var(--space-16) var(--space-8);
+  text-align: center;
+  
+  h2 {
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+  }
+  
+  p {
+    color: var(--text-muted);
+    margin-bottom: var(--space-6);
+  }
+}
+
+.loadingSpinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--border-primary);
+  border-top: 4px solid var(--primary-500);
+  border-radius: var(--radius-full);
+  animation: spin 1s linear infinite;
+  margin-bottom: var(--space-6);
+}
+
+// Error State
+.errorState {
+  @include flex-center-column;
+  padding: var(--space-16) var(--space-8);
+  text-align: center;
+  
+  .errorIcon {
+    font-size: var(--text-6xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  h2 {
+    color: var(--text-primary);
+    margin-bottom: var(--space-2);
+  }
+  
+  p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-6);
+    max-width: 500px;
+  }
+  
+  .retryButton {
+    @include button-primary;
+    @include flex-center;
+    gap: var(--space-2);
+  }
+}
+
+// Animations
+.dashboard {
+  > * {
+    @include slide-up(var(--timing-normal));
+    
+    &:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+    
+    &:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+    
+    &:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+    
+    &:nth-child(5) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+// Responsive Grid Adjustments
+@include mobile-only {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chartsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .bottomSection {
+    grid-template-columns: 1fr;
+    
+    .fullWidthChart {
+      order: 2;
+    }
+    
+    .sideContent {
+      order: 1;
+    }
+  }
+}
+
+// Dark mode adjustments
+:root[data-theme="dark"] {
+  .dashboard {
+    .headerText {
+      h1 {
+        @include gradient-text(linear-gradient(45deg, var(--primary-400), var(--secondary-400)));
+      }
+    }
+    
+    .activityIcon {
+      background: var(--primary-800);
+      color: var(--primary-300);
+    }
+  }
+}

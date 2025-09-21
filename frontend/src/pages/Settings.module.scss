@@ -1,0 +1,483 @@
+@import '../styles/variables.scss';
+@import '../styles/mixins.scss';
+
+.settingsPage {
+  @include flex-column;
+  gap: var(--space-6);
+  height: 100%;
+  @include fade-in;
+}
+
+.pageHeader {
+  @include flex-column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  
+  .title {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin: 0;
+    @include slide-up;
+    
+    @include mobile-only {
+      font-size: var(--text-2xl);
+    }
+  }
+  
+  .subtitle {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin: 0;
+    max-width: 600px;
+    @include slide-up(0.1s);
+    
+    @include mobile-only {
+      font-size: var(--text-base);
+    }
+  }
+}
+
+.content {
+  flex: 1;
+  @include slide-up(0.2s);
+}
+
+// Tabs
+.tabsContainer {
+  @include flex-column;
+  gap: var(--space-4);
+  height: 100%;
+}
+
+.tabsList {
+  @include flex-start;
+  gap: var(--space-2);
+  border-bottom: 1px solid var(--border-primary);
+  padding-bottom: 2px;
+  
+  @include mobile-only {
+    overflow-x: auto;
+    padding-bottom: var(--space-2);
+    -webkit-overflow-scrolling: touch;
+    @include custom-scrollbar;
+    
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+  }
+}
+
+.tabButton {
+  @include flex-center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  cursor: pointer;
+  transition: all var(--timing-fast) var(--ease-out);
+  white-space: nowrap;
+  position: relative;
+  
+  &:hover {
+    color: var(--text-secondary);
+    background: var(--bg-secondary);
+  }
+  
+  &.active {
+    color: var(--primary-600);
+    background: var(--bg-primary);
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--primary-500);
+      border-radius: var(--radius-full);
+    }
+  }
+  
+  .icon {
+    font-size: var(--text-lg);
+  }
+}
+
+.tabContent {
+  flex: 1;
+  overflow-y: auto;
+  @include custom-scrollbar;
+}
+
+.tabPanel {
+  padding: var(--space-6);
+  @include fade-in;
+  
+  @include mobile-only {
+    padding: var(--space-4);
+  }
+}
+
+// Form Sections
+.formSection {
+  @include flex-column;
+  gap: var(--space-6);
+  max-width: 600px;
+}
+
+.sectionTitle {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-4) 0;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-primary);
+}
+
+.formGroup {
+  @include flex-column;
+  gap: var(--space-3);
+}
+
+.formRow {
+  @include grid-responsive(
+    repeat(auto-fit, minmax(200px, 1fr)),
+    var(--space-4)
+  );
+  
+  @include mobile-only {
+    @include flex-column;
+    gap: var(--space-4);
+  }
+}
+
+.inputGroup {
+  @include flex-column;
+  gap: var(--space-2);
+  
+  label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+  }
+  
+  input,
+  select,
+  textarea {
+    @include input-base;
+  }
+  
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .inputHelp {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-top: var(--space-1);
+  }
+}
+
+// Avatar Upload
+.avatarSection {
+  @include flex-start;
+  gap: var(--space-4);
+  align-items: center;
+  
+  @include mobile-only {
+    @include flex-column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.avatarContainer {
+  position: relative;
+}
+
+.avatar {
+  @include flex-center;
+  width: 80px;
+  height: 80px;
+  background: var(--bg-tertiary);
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+  font-size: var(--text-2xl);
+  overflow: hidden;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.avatarUpload {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  @include flex-center;
+  width: 32px;
+  height: 32px;
+  background: var(--primary-500);
+  color: var(--text-inverse);
+  border: 2px solid var(--bg-primary);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  transition: all var(--timing-fast) var(--ease-out);
+  
+  &:hover {
+    background: var(--primary-600);
+    transform: scale(1.1);
+  }
+  
+  input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+}
+
+.avatarInfo {
+  @include flex-column;
+  gap: var(--space-2);
+  
+  h4 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    margin: 0;
+  }
+  
+  p {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+  }
+}
+
+// Theme Selector
+.themeSelector {
+  @include grid-responsive(
+    repeat(auto-fit, minmax(120px, 1fr)),
+    var(--space-3)
+  );
+  
+  @include mobile-only {
+    @include flex-column;
+    gap: var(--space-3);
+  }
+}
+
+.themeOption {
+  @include flex-column;
+  align-items: center;
+  padding: var(--space-4);
+  border: 2px solid var(--border-primary);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--timing-fast) var(--ease-out);
+  text-align: center;
+  gap: var(--space-2);
+  
+  &:hover {
+    border-color: var(--border-secondary);
+    background: var(--bg-secondary);
+  }
+  
+  &.active {
+    border-color: var(--primary-500);
+    background: var(--primary-50);
+    
+    .themeIcon {
+      color: var(--primary-600);
+    }
+  }
+  
+  .themeIcon {
+    font-size: var(--text-2xl);
+    color: var(--text-muted);
+    transition: color var(--timing-fast) var(--ease-out);
+  }
+  
+  .themeName {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+  }
+}
+
+// Action Buttons
+.actionButtons {
+  @include flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-primary);
+  
+  @include mobile-only {
+    @include flex-column;
+    align-items: stretch;
+  }
+}
+
+.cancelButton {
+  @include button-secondary;
+}
+
+.saveButton {
+  @include button-primary;
+  @include flex-center;
+  gap: var(--space-2);
+  
+  &.saving {
+    opacity: 0.7;
+    pointer-events: none;
+    
+    .icon {
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+// Notification Preferences
+.notificationGroup {
+  @include flex-column;
+  gap: var(--space-4);
+  
+  .notificationItem {
+    @include flex-between;
+    padding: var(--space-4);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    
+    @include mobile-only {
+      @include flex-column;
+      gap: var(--space-3);
+      align-items: stretch;
+    }
+    
+    .notificationInfo {
+      @include flex-column;
+      gap: var(--space-1);
+      
+      h5 {
+        font-size: var(--text-base);
+        font-weight: var(--font-medium);
+        color: var(--text-primary);
+        margin: 0;
+      }
+      
+      p {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        margin: 0;
+      }
+    }
+    
+    .toggle {
+      @include flex-center;
+      
+      input[type="checkbox"] {
+        width: 44px;
+        height: 24px;
+        appearance: none;
+        background: var(--bg-tertiary);
+        border-radius: var(--radius-full);
+        position: relative;
+        cursor: pointer;
+        transition: all var(--timing-fast) var(--ease-out);
+        margin: 0;
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          width: 20px;
+          height: 20px;
+          background: var(--text-inverse);
+          border-radius: var(--radius-full);
+          transition: all var(--timing-fast) var(--ease-out);
+          box-shadow: var(--shadow-sm);
+        }
+        
+        &:checked {
+          background: var(--primary-500);
+          
+          &::before {
+            transform: translateX(20px);
+          }
+        }
+        
+        &:hover {
+          background: var(--bg-quaternary);
+          
+          &:checked {
+            background: var(--primary-600);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// Dark mode adjustments
+:root[data-theme="dark"] {
+  .settingsPage {
+    .tabButton {
+      &.active {
+        color: var(--primary-400);
+        
+        &::after {
+          background: var(--primary-400);
+        }
+      }
+    }
+    
+    .themeOption {
+      &.active {
+        border-color: var(--primary-400);
+        background: var(--primary-900);
+        
+        .themeIcon {
+          color: var(--primary-400);
+        }
+      }
+    }
+    
+    .saveButton {
+      &.saving {
+        opacity: 0.6;
+      }
+    }
+    
+    .notificationItem {
+      .toggle {
+        input[type="checkbox"] {
+          &:checked {
+            background: var(--primary-500);
+          }
+          
+          &:hover:checked {
+            background: var(--primary-400);
+          }
+        }
+      }
+    }
+  }
+}

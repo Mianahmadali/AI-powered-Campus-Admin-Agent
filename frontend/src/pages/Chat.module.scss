@@ -1,0 +1,438 @@
+@import '../styles/variables.scss';
+@import '../styles/mixins.scss';
+
+.chatPage {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  @include fade-in;
+}
+
+// Chat Page Header
+.chatPageHeader {
+  margin-bottom: var(--space-6);
+  
+  @include mobile-only {
+    margin-bottom: var(--space-4);
+  }
+}
+
+.headerContent {
+  @include flex-between;
+  align-items: flex-start;
+  gap: var(--space-6);
+  
+  @include mobile-only {
+    @include flex-column;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+}
+
+.headerText {
+  flex: 1;
+  
+  h1 {
+    font-size: var(--text-4xl);
+    font-weight: var(--font-bold);
+    @include gradient-text;
+    margin-bottom: var(--space-2);
+    
+    @include mobile-only {
+      font-size: var(--text-3xl);
+    }
+  }
+  
+  p {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin: 0;
+    
+    @include mobile-only {
+      font-size: var(--text-base);
+    }
+  }
+}
+
+.headerActions {
+  @include flex-end;
+  gap: var(--space-3);
+  
+  @include mobile-only {
+    @include flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+.actionButton {
+  @include button-secondary;
+  @include flex-center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  
+  &.active {
+    background: var(--primary-100);
+    border-color: var(--primary-200);
+    color: var(--primary-700);
+  }
+  
+  &:hover {
+    @include hover-lift;
+  }
+}
+
+// Chat Stats
+.chatStats {
+  @include grid-auto-fit(250px, var(--space-4));
+  margin-bottom: var(--space-8);
+  
+  @include mobile-only {
+    @include grid-auto-fit(100%, var(--space-3));
+    margin-bottom: var(--space-6);
+  }
+}
+
+// Main Chat Layout
+.chatLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  height: calc(100vh - var(--navbar-height) - 400px);
+  min-height: 600px;
+  
+  @include desktop-up {
+    grid-template-columns: 1fr 350px;
+    
+    &:has(.settingsPanel) {
+      grid-template-columns: 1fr 350px;
+    }
+    
+    &:not(:has(.settingsPanel)) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @include mobile-only {
+    height: calc(100vh - var(--navbar-height) - 300px);
+    min-height: 500px;
+    gap: var(--space-4);
+  }
+}
+
+.chatMain {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  
+  .mainChatBox {
+    flex: 1;
+    height: 100%;
+  }
+}
+
+// Settings Panel
+.settingsPanel {
+  @include flex-column;
+  gap: var(--space-4);
+  
+  @include mobile-only {
+    order: -1;
+  }
+}
+
+.settingsCard,
+.historyCard {
+  // Card styles inherited from Card component
+}
+
+// Settings Content
+.settingsList {
+  @include flex-column;
+  gap: var(--space-4);
+}
+
+.settingItem {
+  @include flex-column;
+  gap: var(--space-2);
+  
+  &:has(.settingInfo) {
+    @include flex-between;
+    align-items: flex-start;
+    
+    @include mobile-only {
+      @include flex-column;
+      align-items: stretch;
+    }
+  }
+  
+  label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+  }
+  
+  input[type="text"] {
+    @include input-base;
+    margin-top: var(--space-1);
+  }
+}
+
+.settingInfo {
+  flex: 1;
+  
+  label {
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--text-primary);
+    margin-bottom: var(--space-1);
+  }
+  
+  p {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin: 0;
+  }
+}
+
+// Toggle Switch
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 28px;
+  
+  input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+}
+
+.toggleSlider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-tertiary);
+  transition: all var(--timing-normal) var(--ease-out);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-primary);
+  
+  &:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    top: 3px;
+    background-color: var(--text-inverse);
+    transition: all var(--timing-normal) var(--ease-out);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  input:checked + & {
+    background-color: var(--primary-500);
+    border-color: var(--primary-500);
+    
+    &:before {
+      transform: translateX(20px);
+    }
+  }
+  
+  input:focus + & {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  &:hover {
+    background-color: var(--bg-secondary);
+    
+    input:checked + & {
+      background-color: var(--primary-600);
+    }
+  }
+}
+
+.settingActions {
+  @include flex-start;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  
+  button {
+    @include button-secondary;
+    @include flex-center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    
+    &:hover {
+      @include hover-lift(2px);
+    }
+  }
+}
+
+// History Section
+.historyStats {
+  @include flex-column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.historyItem {
+  @include flex-between;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--border-primary);
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.historyLabel {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-weight: var(--font-medium);
+}
+
+.historyValue {
+  font-size: var(--text-sm);
+  color: var(--text-primary);
+  font-weight: var(--font-semibold);
+  @include text-truncate;
+  max-width: 150px;
+}
+
+.historyActions {
+  @include flex-column;
+  gap: var(--space-2);
+  
+  button {
+    @include button-secondary;
+    @include flex-center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    width: 100%;
+    
+    &:hover {
+      @include hover-lift(2px);
+    }
+    
+    &:has([data-icon="RiDeleteBinLine"]) {
+      color: var(--error-600);
+      border-color: var(--error-200);
+      
+      &:hover {
+        background: var(--error-50);
+        border-color: var(--error-300);
+        color: var(--error-700);
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@include mobile-only {
+  .chatLayout {
+    grid-template-columns: 1fr;
+  }
+  
+  .settingsPanel {
+    order: -1;
+  }
+  
+  .settingItem {
+    &:has(.settingInfo) {
+      @include flex-column;
+      align-items: stretch;
+      gap: var(--space-3);
+    }
+  }
+  
+  .toggle {
+    align-self: flex-start;
+  }
+}
+
+@include tablet-up {
+  .chatLayout {
+    &:has(.settingsPanel) {
+      grid-template-columns: 1fr 300px;
+    }
+  }
+}
+
+// Dark mode adjustments
+:root[data-theme="dark"] {
+  .chatPage {
+    .headerText {
+      h1 {
+        @include gradient-text(linear-gradient(45deg, var(--primary-400), var(--secondary-400)));
+      }
+    }
+    
+    .actionButton {
+      &.active {
+        background: var(--primary-800);
+        border-color: var(--primary-700);
+        color: var(--primary-300);
+      }
+    }
+    
+    .toggleSlider {
+      background-color: var(--bg-tertiary);
+      border-color: var(--border-secondary);
+      
+      &:before {
+        background-color: var(--text-primary);
+      }
+      
+      input:checked + & {
+        background-color: var(--primary-600);
+        border-color: var(--primary-600);
+      }
+      
+      &:hover {
+        background-color: var(--bg-secondary);
+        
+        input:checked + & {
+          background-color: var(--primary-700);
+        }
+      }
+    }
+    
+    .historyActions {
+      button {
+        &:has([data-icon="RiDeleteBinLine"]) {
+          color: var(--error-400);
+          border-color: var(--error-800);
+          
+          &:hover {
+            background: var(--error-900);
+            border-color: var(--error-700);
+            color: var(--error-300);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Loading and animation states
+.chatPage {
+  > * {
+    @include slide-up(var(--timing-normal));
+    
+    &:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+    
+    &:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+    
+    &:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+  }
+}

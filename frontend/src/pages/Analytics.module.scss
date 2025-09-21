@@ -1,0 +1,239 @@
+@import '../styles/variables.scss';
+@import '../styles/mixins.scss';
+
+.analyticsPage {
+  @include flex-column;
+  gap: var(--space-6);
+  height: 100%;
+  @include fade-in;
+}
+
+.pageHeader {
+  @include flex-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-2);
+  
+  @include mobile-only {
+    @include flex-column;
+    align-items: stretch;
+  }
+}
+
+.headerContent {
+  @include flex-column;
+  gap: var(--space-2);
+  
+  .title {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin: 0;
+    @include slide-up;
+    
+    @include mobile-only {
+      font-size: var(--text-2xl);
+    }
+  }
+  
+  .subtitle {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin: 0;
+    @include slide-up(0.1s);
+    
+    @include mobile-only {
+      font-size: var(--text-base);
+    }
+  }
+}
+
+.headerActions {
+  @include flex-end;
+  gap: var(--space-3);
+  
+  @include mobile-only {
+    @include flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+.refreshButton {
+  @include button-secondary;
+  @include flex-center;
+  gap: var(--space-2);
+  white-space: nowrap;
+  
+  &:hover {
+    @include hover-lift(2px);
+  }
+  
+  &.refreshing {
+    opacity: 0.7;
+    pointer-events: none;
+    
+    .icon {
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+.exportButton {
+  @include button-primary;
+  @include flex-center;
+  gap: var(--space-2);
+  white-space: nowrap;
+  
+  &:hover {
+    @include hover-lift(2px);
+  }
+}
+
+.filtersContainer {
+  @include slide-up(0.2s);
+}
+
+.filtersCard {
+  .filtersContent {
+    @include grid-auto-fit(180px, var(--space-4));
+    
+    @include mobile-only {
+      @include flex-column;
+      gap: var(--space-4);
+    }
+  }
+  
+  .filterGroup {
+    @include flex-column;
+    gap: var(--space-2);
+    
+    label {
+      font-size: var(--text-sm);
+      font-weight: var(--font-medium);
+      color: var(--text-primary);
+    }
+    
+    select {
+      @include input-base;
+      cursor: pointer;
+    }
+  }
+}
+
+.overviewSection {
+  @include slide-up(0.3s);
+}
+
+.overviewGrid {
+  @include grid-responsive(
+    repeat(auto-fit, minmax(250px, 1fr)),
+    var(--space-6)
+  );
+  
+  @include mobile-only {
+    @include flex-column;
+    gap: var(--space-4);
+  }
+}
+
+.chartsSection {
+  @include slide-up(0.4s);
+}
+
+.chartsGrid {
+  @include grid-responsive(
+    repeat(auto-fit, minmax(320px, 1fr)),
+    var(--space-6)
+  );
+  
+  @include tablet-only {
+    @include flex-column;
+    gap: var(--space-6);
+  }
+  
+  @include mobile-only {
+    @include flex-column;
+    gap: var(--space-4);
+  }
+}
+
+// Loading States
+.loading {
+  @include flex-center;
+  padding: var(--space-16);
+  
+  .loadingSpinner {
+    @include flex-center-column;
+    gap: var(--space-4);
+    
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 4px solid var(--border-primary);
+      border-top: 4px solid var(--primary-500);
+      border-radius: var(--radius-full);
+      animation: spin 1s linear infinite;
+    }
+    
+    span {
+      color: var(--text-secondary);
+      font-size: var(--text-lg);
+    }
+  }
+}
+
+// Error States
+.error {
+  @include flex-center;
+  padding: var(--space-16);
+  text-align: center;
+  
+  .errorContent {
+    @include flex-column;
+    gap: var(--space-4);
+    align-items: center;
+    max-width: 400px;
+    
+    .errorIcon {
+      font-size: var(--text-6xl);
+      color: var(--error-500);
+    }
+    
+    h3 {
+      font-size: var(--text-2xl);
+      color: var(--text-primary);
+      margin: 0;
+    }
+    
+    p {
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    
+    button {
+      @include button-primary;
+    }
+  }
+}
+
+// Animations
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// Dark mode adjustments
+:root[data-theme="dark"] {
+  .analyticsPage {
+    .refreshButton {
+      &.refreshing {
+        opacity: 0.6;
+      }
+    }
+    
+    .errorContent {
+      .errorIcon {
+        color: var(--error-400);
+      }
+    }
+  }
+}

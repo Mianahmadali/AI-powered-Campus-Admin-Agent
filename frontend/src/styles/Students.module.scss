@@ -1,0 +1,57 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+.studentsPage {
+  @include flex-column;
+  gap: var(--space-6);
+  height: 100%;
+  @include fade-in;
+}
+
+.pageHeader {
+  @include flex-column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  
+  .title {
+    font-size: var(--text-3xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    margin: 0;
+    @include slide-up;
+    
+    @include mobile-only {
+      font-size: var(--text-2xl);
+    }
+  }
+  
+  .subtitle {
+    font-size: var(--text-lg);
+    color: var(--text-secondary);
+    margin: 0;
+    max-width: 600px;
+    @include slide-up(0.1s);
+    
+    @include mobile-only {
+      font-size: var(--text-base);
+    }
+  }
+}
+
+.content {
+  flex: 1;
+  @include slide-up(0.2s);
+}
+
+// Dark mode adjustments
+:root[data-theme="dark"] {
+  .studentsPage {
+    .title {
+      color: var(--text-primary);
+    }
+    
+    .subtitle {
+      color: var(--text-secondary);
+    }
+  }
+}
