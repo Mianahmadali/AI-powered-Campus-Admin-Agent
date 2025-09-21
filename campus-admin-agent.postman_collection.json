@@ -1,0 +1,146 @@
+{
+  "info": {
+    "name": "Campus Admin Agent",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "d3f8a7e0-0000-0000-0000-000000000001"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Students - List",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/students?limit=20",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["students"],
+          "query": [{"key":"limit","value":"20"}]
+        }
+      }
+    },
+    {
+      "name": "Students - Create",
+      "request": {
+        "method": "POST",
+        "header": [{"key":"Content-Type","value":"application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"student_id\": \"S1001\",\n  \"name\": \"Ada Lovelace\",\n  \"email\": \"ada@example.edu\",\n  \"department\": \"Computer Science\",\n  \"year\": 3,\n  \"status\": \"active\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/students",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["students"]
+        }
+      }
+    },
+    {
+      "name": "Students - Get by student_id",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/students/S1001",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["students","S1001"]
+        }
+      }
+    },
+    {
+      "name": "Students - Update by _id",
+      "request": {
+        "method": "PUT",
+        "header": [{"key":"Content-Type","value":"application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Ada Byron\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/students/{{mongo_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["students","{{mongo_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Students - Delete by _id",
+      "request": {
+        "method": "DELETE",
+        "url": {
+          "raw": "http://localhost:8000/students/{{mongo_id}}",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["students","{{mongo_id}}"]
+        }
+      }
+    },
+    {
+      "name": "Chat - Sync",
+      "request": {
+        "method": "POST",
+        "header": [{"key":"Content-Type","value":"application/json"}],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"session_id\": \"demo-session\",\n  \"message\": \"How many students are in CS?\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/chat",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["chat"]
+        }
+      }
+    },
+    {
+      "name": "Chat - Stream (GET SSE)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/chat/stream?session_id=demo-session&message=Hello",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["chat","stream"],
+          "query": [
+            {"key": "session_id", "value": "demo-session"},
+            {"key": "message", "value": "Hello"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "Analytics",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/analytics",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["analytics"]
+        }
+      }
+    }
+  ]
+}
