@@ -24,11 +24,26 @@ Backend setup
 - .\.venv\Scripts\Activate.ps1
 - pip install fastapi uvicorn[standard] motor pymongo pydantic openai
 
-3) Environment variables
-- $env:MONGODB_URI = "mongodb://localhost:27017"  # default
-- $env:MONGODB_DB = "campus_admin"                # default
-- $env:OPENAI_API_KEY = "{{OPENAI_API_KEY}}"      # required
-- Optional: $env:AGENT_MODEL = "gpt-4o-mini"
+3) Environment variables setup
+**IMPORTANT: Never commit .env files with real secrets to Git!**
+
+A) Copy the template and add your real credentials:
+   - Copy backend/.env.example to backend/.env
+   - Edit backend/.env with your actual values:
+     * MONGODB_URI: Your MongoDB connection string
+     * OPENAI_API_KEY: Your OpenAI or OpenRouter API key
+     * JWT_SECRET_KEY: A strong, unique secret for JWT tokens
+
+B) Required environment variables:
+   - MONGODB_URI: MongoDB connection string (e.g., mongodb://localhost:27017 or mongodb+srv://...)
+   - MONGODB_DB: Database name (default: campus_admin)
+   - OPENAI_API_KEY: Your API key (OpenAI: sk-... or OpenRouter: sk-or-...)
+   - JWT_SECRET_KEY: Strong secret key for JWT authentication
+   - ACCESS_TOKEN_EXPIRE_MINUTES: Token expiration (default: 30)
+
+C) Optional settings:
+   - AGENT_MODEL: AI model to use (default: gpt-4o-mini)
+   - BACKEND_SKIP_DB=1: Skip database connection for testing
 
 4) Run the backend
 - uvicorn backend.main:app --reload
@@ -43,7 +58,8 @@ Frontend setup (Vite + React)
 - npm install
 
 3) Configure API base URL (optional)
-- Create frontend/.env and set:
+- Copy frontend/.env.example to frontend/.env
+- Edit frontend/.env and set:
   VITE_API_BASE_URL=http://localhost:8000
 
 4) Run the dev server
@@ -80,11 +96,21 @@ Indexes
 Postman collection
 - campus-admin-agent.postman_collection.json at project root
 
+Security
+🔒 **CRITICAL SECURITY MEASURES**
+- ✅ .env files are excluded from Git via .gitignore
+- ✅ Sensitive data removed from Git history
+- ✅ Use .env.example templates for setup
+- ❗ **NEVER** commit real API keys, database URLs, or secrets
+- ❗ **ALWAYS** use strong, unique JWT secret keys in production
+- ❗ Regularly rotate API keys and secrets
+
 Production notes
 - Restrict CORS (backend/main.py) to known frontend origins
 - Configure proper logging and error handling
 - Consider rate-limiting and authentication (e.g., API keys/JWT) for admin endpoints
 - Add TTL/archive strategy for old conversations and analytics aggregations cache if needed
+- Use environment-specific .env files (.env.production, .env.staging)
 
 Project structure
 campus-admin-agent/
